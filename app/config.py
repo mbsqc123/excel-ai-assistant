@@ -43,6 +43,17 @@ class AppConfig:
             'save_logs': True,
             'log_level': 'INFO',
 
+            # Visualization settings
+            'visualization': {
+                'default_chart_type': 'line',
+                'default_palette': 'default',
+                'default_figure_width': 10,
+                'default_figure_height': 6,
+                'show_grid': True,
+                'show_legend': True,
+                'export_dpi': 300,
+            },
+
             # Predefined prompts
             'prompts': {
                 # Basic text transformation

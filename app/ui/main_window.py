@@ -22,6 +22,7 @@ from app.ui.components.treeview import DataTreeview
 from app.ui.dialogs.about_dialog import AboutDialog
 from app.ui.dialogs.preferences_dialog import PreferencesDialog
 from app.ui.dialogs.prompt_manager_dialog import PromptManagerDialog
+from app.ui.dialogs.visualization_dialog import VisualizationDialog
 from app.utils.logger import setup_logger
 from app.utils.theme_manager import ThemeManager
 
@@ -123,6 +124,8 @@ class ExcelAIAssistantApp:
         view_menu.add_separator()
         view_menu.add_command(label="Data Summary", command=self._show_data_summary)
         view_menu.add_command(label="Column Statistics", command=self._show_column_stats)
+        view_menu.add_separator()
+        view_menu.add_command(label="Data Visualization...", command=self._open_visualization)
 
         # AI menu
         ai_menu = tk.Menu(menubar, tearoff=0)
@@ -251,6 +254,11 @@ class ExcelAIAssistantApp:
 
         # Test connection button
         ttk.Button(toolbar_frame, text="Test API", command=self._test_api_connection).pack(side=tk.LEFT, padx=2)
+
+        ttk.Separator(toolbar_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, padx=5, fill=tk.Y)
+
+        # Visualization button
+        ttk.Button(toolbar_frame, text="Visualize Data", command=self._open_visualization).pack(side=tk.LEFT, padx=2)
 
         ttk.Separator(toolbar_frame, orient=tk.VERTICAL).pack(side=tk.LEFT, padx=5, fill=tk.Y)
 
@@ -2308,8 +2316,27 @@ class ExcelAIAssistantApp:
 
         ttk.Button(button_frame, text="Close", command=dialog.destroy).pack(side=tk.RIGHT)
 
-    # These methods have been removed as part of the application's refactoring to eliminate
-    # visualization functionality per the requirements
+    def _open_visualization(self):
+        """Open the data visualization dialog"""
+        if self.data_manager.df is None:
+            messagebox.showinfo("Info", "No data loaded. Please open a file first.")
+            return
+
+        if self.data_manager.df.empty:
+            messagebox.showinfo("Info", "The loaded data is empty.")
+            return
+
+        try:
+            # Open visualization dialog
+            VisualizationDialog(
+                self.root,
+                self.data_manager.df,
+                self.theme_manager
+            )
+            self.logger.info("Opened visualization dialog")
+        except Exception as e:
+            self.logger.error(f"Error opening visualization dialog: {str(e)}")
+            messagebox.showerror("Error", f"Failed to open visualization dialog:\n{str(e)}")
 
     def _open_preferences(self):
         """Open the preferences dialog"""
