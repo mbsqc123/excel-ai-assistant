@@ -198,10 +198,68 @@ The `design/` folder contains React mockups of the application's interface. Thes
 - Enable multi-threading in Advanced settings for better performance
 - Consider processing smaller ranges if dealing with very large datasets
 
+## Testing
+
+Excel AI Assistant has a comprehensive test suite to ensure reliability and quality.
+
+### Running Tests
+
+```bash
+# Install development dependencies
+uv pip install -r requirements-dev.txt
+
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=app --cov-report=html
+
+# Run only unit tests
+pytest -m unit
+
+# Run tests in parallel
+pytest -n auto
+```
+
+For convenience, use the provided test runner scripts:
+
+```bash
+# Linux/Mac
+./run_tests.sh --help
+
+# Windows
+run_tests.bat --help
+```
+
+### Test Coverage
+
+- **Current Coverage**: 80%+ target
+- **Unit Tests**: Service classes, configuration, utilities
+- **Integration Tests**: Batch processing, end-to-end workflows
+- **Test Documentation**: See [TESTING.md](docs/TESTING.md)
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
+### Development Setup
+
+1. Fork and clone the repository
+2. Install development dependencies: `uv pip install -r requirements-dev.txt`
+3. Create a feature branch: `git checkout -b feature-name`
+4. Make your changes and write tests
+5. Run tests: `./run_tests.sh`
+6. Commit and push your changes
+7. Submit a Pull Request
+
+### Code Quality
+
+This project maintains high code quality standards:
+- All code must have corresponding tests
+- Maintain 80%+ test coverage
+- Follow PEP 8 style guidelines
+- Add type hints to all functions
+- Document all public APIs
 
 ## License
 
@@ -216,5 +274,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Quick Links
 
+- [Testing Guide](docs/TESTING.md)
 - [Mockups Design Gallery](docs/mockups_gallery.md)
 - [Ollama Setup](docs/ollama_setup.md)
